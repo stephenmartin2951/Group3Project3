@@ -7,4 +7,7 @@ Group3Project3.py (could probably be named better) is where Python work is being
 
 DigestableIssuesExample.txt has a nicely formatted look at what type of data is pulled through the API.
 
+TODO: Pull down commit data
+
 TODO: Create visualizations using CSV data. Preferably in Python. Thinking we can use a combination of Pandas + Matplotlib
+
