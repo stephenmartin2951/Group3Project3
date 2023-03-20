@@ -3,7 +3,7 @@
 
 paperIssues.csv is where issue data pulled using ghapi is stored
 
-Group3Project3.py (could probably be named better) is where Python work is being done
+issuesCrawler.py uses GhApi to pull issues data and write it to CSV. Args = -o --owner for Repo owner and -r --repo for repo name. 
 
 DigestableIssuesExample.txt has a nicely formatted look at what type of data is pulled through the API.
 
