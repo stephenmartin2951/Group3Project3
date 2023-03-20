@@ -37,8 +37,6 @@ def populateIssueData():
 
 populateIssueData()
 
-#TODO: We can now populate data. We can import CSV into whichever tool we use to create visualization
-
 
 
 
