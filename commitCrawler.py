@@ -21,22 +21,21 @@ github_token = "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"
 api = GhApi(owner=GHOwner, repo=GHRepo, token=github_token, ref='heads/master')
 
 def populateCommitData():  
-    return
     ####################################
     #TODO: Refactor for commits
     ####################################
-    # pageNum = 1
-    # issues = api('/repos/{}/{}/issues'.format(GHOwner, GHRepo), 'GET', query=dict(state='all', per_page=100, page=pageNum))
-    # with open('{}Commits.csv'.format(GHRepo), 'w', newline='') as csvfile:
-    #     issuewriter = csv.writer(csvfile)
-    #     issuewriter.writerow(["State", "Labels", "Assignees", "Comments", "Closed_At", "Created_At", "Locked"])
-    #     #iterate through every issue
-    #     while(len(issues) > 0):
-    #         #Write each issue to csv
-    #         for issue in issues:
-    #             issuewriter.writerow([issue.state, issue.labels, len(issue.assignees), issue.comments, issue.closed_at, issue.created_at, issue.locked])
-    #         pageNum += 1
-    #         issues = api('/repos/{}/{}/issues'.format(GHOwner, GHRepo), 'GET', query=dict(state='all', per_page=100, page=pageNum))  
+    pageNum = 1
+    commits = api('/repos/{}/{}/commits'.format(GHOwner, GHRepo), 'GET', query=dict(state='all', per_page=100, page=pageNum))
+    with open('{}Commits.csv'.format(GHRepo), 'w', newline='') as csvfile:
+        commitwriter = csv.writer(csvfile)
+        commitwriter.writerow(["Author", "Committer", "Commit Date", "Tree URL"])
+        #iterate through every issue
+        while len(commits) > 0:
+            #Write each issue to csv
+            for commit in commits:
+                commitwriter.writerow([commit.commit.author.name, commit.commit.committer.name, commit.commit.committer.date, commit.commit.tree.url])
+            pageNum += 1
+            commits = api('/repos/{}/{}/commits'.format(GHOwner, GHRepo), 'GET', query=dict(state='all', per_page=100, page=pageNum))
 
 
 populateCommitData()
