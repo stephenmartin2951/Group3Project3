@@ -23,7 +23,7 @@ api = GhApi(owner=GHOwner, repo=GHRepo, token=github_token, ref='heads/master')
 def populateIssueData():  
     pageNum = 1
     issues = api('/repos/{}/{}/issues'.format(GHOwner, GHRepo), 'GET', query=dict(state='all', per_page=100, page=pageNum))
-    with open('{}Issues.csv'.format(GHRepo), 'w', newline='') as csvfile:
+    with open('issues/{}{}Issues.csv'.format(GHOwner,GHRepo), 'w', newline='', encoding="utf-8") as csvfile:
         issuewriter = csv.writer(csvfile)
         issuewriter.writerow(["State", "Labels", "Assignees", "Comments", "Closed_At", "Created_At", "Locked"])
         #iterate through every issue

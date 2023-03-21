@@ -21,12 +21,9 @@ github_token = "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"
 api = GhApi(owner=GHOwner, repo=GHRepo, token=github_token, ref='heads/master')
 
 def populateCommitData():  
-    ####################################
-    #TODO: Refactor for commits
-    ####################################
     pageNum = 1
     commits = api('/repos/{}/{}/commits'.format(GHOwner, GHRepo), 'GET', query=dict(state='all', per_page=100, page=pageNum))
-    with open('{}Commits.csv'.format(GHRepo), 'w', newline='') as csvfile:
+    with open('commits/{}{}Commits.csv'.format(GHOwner,GHRepo), 'w', newline='', encoding="utf-8") as csvfile:
         commitwriter = csv.writer(csvfile)
         commitwriter.writerow(["Author", "Committer", "Commit Date", "Tree URL"])
         #iterate through every issue
