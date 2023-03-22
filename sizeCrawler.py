@@ -37,7 +37,6 @@ def getCommitTrees():
 def populateSizeData():  
     shas, dates = getCommitTrees()
     sizeArr = []
-    print("Finding size")
     for sha in shas:
         tree = api('/repos/{}/{}/git/trees/{}'.format(GHOwner, GHRepo, sha), 'GET', query=dict(recursive=1))
         totalSize = 0
@@ -45,7 +44,6 @@ def populateSizeData():
             if hasattr(branch, 'size'):
                 totalSize += branch.size
         sizeArr.append(totalSize)
-    print("Writing")
     with open('size/{}{}Size.csv'.format(GHOwner,GHRepo), 'w', newline='', encoding="utf-8") as csvfile:
         commitwriter = csv.writer(csvfile)
         commitwriter.writerow(["Owner", "Repo", "Size", "Date"])
