@@ -1,6 +1,7 @@
 from ghapi.all import GhApi
 import csv
 import argparse
+from rateLimitCheck import pingsRemaining
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-o", "--owner", type=str)
@@ -16,12 +17,19 @@ if(GHRepo == None):
     GHRepo = 'Paper'
 
 
-github_token = "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"
+github_token = ["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","insert 2nd token", "insert 3rd token"]
+token_counter = 0
 
-api = GhApi(owner=GHOwner, repo=GHRepo, token=github_token, ref='heads/master')
+while pingsRemaining(github_token[token_counter]) < 100:
+        token_counter += 1
 
-def populateCommitData():  
+api = GhApi(owner=GHOwner, repo=GHRepo, token=github_token[token_counter], ref='heads/master')
+
+def populateCommitData(token_counter, api):  
     pageNum = 1
+    while pingsRemaining(github_token[token_counter]) < 100:
+        token_counter += 1
+        api = GhApi(owner=GHOwner, repo=GHRepo, token=github_token, ref='heads/master')
     commits = api('/repos/{}/{}/commits'.format(GHOwner, GHRepo), 'GET', query=dict(state='all', per_page=100, page=pageNum))
     with open('commits/{}{}Commits.csv'.format(GHOwner,GHRepo), 'w', newline='', encoding="utf-8") as csvfile:
         commitwriter = csv.writer(csvfile)
@@ -32,10 +40,13 @@ def populateCommitData():
             for commit in commits:
                 commitwriter.writerow([commit.commit.author.name, commit.commit.committer.name, commit.commit.committer.date, commit.commit.tree.url])
             pageNum += 1
+            while pingsRemaining(github_token[token_counter]) < 100:
+                token_counter += 1
+                api = GhApi(owner=GHOwner, repo=GHRepo, token=github_token, ref='heads/master')
             commits = api('/repos/{}/{}/commits'.format(GHOwner, GHRepo), 'GET', query=dict(state='all', per_page=100, page=pageNum))
 
 
-populateCommitData()
+populateCommitData(token_counter, api)
 
 
 
