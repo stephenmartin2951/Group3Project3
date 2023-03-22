@@ -17,7 +17,7 @@ if(GHRepo == None):
     GHRepo = 'Paper'
 
 
-github_token = ["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","insert 2nd token", "insert 3rd token"]
+github_token = ["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","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", "insert 3rd token"]
 token_counter = 0
 
 while pingsRemaining(github_token[token_counter]) < 100:
