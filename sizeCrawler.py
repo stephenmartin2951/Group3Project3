@@ -25,7 +25,7 @@ while pingsRemaining(github_token[token_counter]) < 100:
 
 api = GhApi(owner=GHOwner, repo=GHRepo, token=github_token[token_counter], ref='heads/master')
 
-def getCommitTrees(token_counter):
+def getCommitTrees(token_counter, api):
     pageNum = 1
     while pingsRemaining(github_token[token_counter]) < 100:
         token_counter += 1
@@ -44,8 +44,8 @@ def getCommitTrees(token_counter):
 
     return shas, dates    
 
-def populateSizeData(token_counter):  
-    shas, dates = getCommitTrees(token_counter)
+def populateSizeData(token_counter, api):  
+    shas, dates = getCommitTrees(token_counter, api)
     sizeArr = []
     for sha in shas:
         while pingsRemaining(github_token[token_counter]) < 100:
@@ -64,4 +64,4 @@ def populateSizeData(token_counter):
             commitwriter.writerow([GHOwner, GHRepo, size, date])            
 
 
-populateSizeData(token_counter)
+populateSizeData(token_counter, api)
