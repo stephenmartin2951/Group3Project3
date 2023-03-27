@@ -17,15 +17,15 @@ def createDateFreqDF(df):
     # Returns the data frame with only year and number of commits for that year
     return valCounts
 
-def createBarChart(df):
+def createBarChart(df, xAxis, yAxis):
     plottingDF = createDateFreqDF(df)
-    plottingDF.plot.bar(x = 'Years', y = 'Frequency')
+    plottingDF.plot.bar(x=xAxis, y=yAxis)
     plt.title('Commits per Year')
     plt.show()
 
-def createScatterPlot(df):
+def createScatterPlot(df, xAxis, yAxis, color):
     plottingDF = createDateFreqDF(df)
-    plottingDF.plot(x = 'Years', y = 'Frequency')
+    plottingDF.plot(x=xAxis, y=yAxis, c=color)
     plt.ylabel('Number of Commits')
     plt.title('Commits per Year')
     plt.show()
@@ -33,5 +33,5 @@ def createScatterPlot(df):
 
 paperCommitsDF = createDataFrame('commits/PaperMCPaperCommits.csv')
 
-createBarChart(paperCommitsDF)
-createScatterPlot(paperCommitsDF)
+createBarChart(paperCommitsDF, 'Years', 'Frequency')
+createScatterPlot(paperCommitsDF, 'Years', 'Frequency', 'DarkBlue')
