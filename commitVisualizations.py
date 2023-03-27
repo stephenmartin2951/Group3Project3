@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 def createDataFrame(filePath):
     return pd.read_csv(filePath, header = 0)
 
+# TODO: Allow the user to specify what unit of time should be on x axis
 def createDateFreqDF(df):
     # Creates a data frame with JUST each year the repo was committed to and the # of commits for that year
     df['Years'] = pd.to_datetime(df['Commit Date']).dt.year
@@ -13,7 +14,7 @@ def createDateFreqDF(df):
     countYears = commitYears['Years'].value_counts()
     valCounts = pd.DataFrame(countYears).sort_index().reset_index()
     valCounts.columns = ['Years', 'Frequency']
-    # Returns the data frame with only
+    # Returns the data frame with only year and number of commits for that year
     return valCounts
 
 def createBarChart(df):
