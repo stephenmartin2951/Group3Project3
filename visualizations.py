@@ -3,8 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import utils as utl
 
-
-
 def createDataFrame(filePath):
     return pd.read_csv(filePath, header = 0)
 
@@ -40,18 +38,3 @@ def createBarChart(df, xAxis, yAxis, df2, xAxisTitle = "x Axis" , yAxisTitle = "
     plt.title(chartTitle)
     plt.show() 
 
-#Create DataFrames
-df = createDataFrame('issues/PaperMCPaperIssues.csv')
-df2 = createDataFrame('issues/bakkesmodorgBakkesModSDKIssues.csv')
-
-#Add a column that contains the Created_At year and call the column "Created_At_Year"
-utl.addYear(df, 'Created_At', 'Created_At_Year')
-utl.addYear(df2, 'Created_At', 'Created_At_Year')
-
-#Aggregate DataFrames by year values
-aggDF = utl.frequencyPerDate(df, 'Created_At_Year', "Comments")
-aggDF2 = utl.frequencyPerDate(df2, 'Created_At_Year', "Comments")
-
-
-createScatterPlot(df, 'Created_At', 'Comments', 'DarkBlue', df2, "Green", "Created at Date", "Number of Comments", "Comments over Time")
-createBarChart(aggDF, 'Created_At_Year', 'Comments', aggDF2, "Years", "Number of Comments", "Comments per Year")
