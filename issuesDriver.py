@@ -26,8 +26,29 @@ aggBakkesClosedIssuesDF = utl.frequencyPerDate(BakkesClosedIssuesDF, 'Created_At
 
 Years = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]
 
-# print(aggPaperOpenIssuesDF['State'])
-# print(aggPaperClosedIssuesDF['State'])
+paperOpenIssuesYearlyTotal, paperClosedIssuesYearlyTotal, bakkesOpenIssuesYearlyTotal, bakkesClosedIssuesYearlyTotal = ([] for i in range(4))
 
-# vis.createDoubleBarChart(aggPaperOpenIssuesDF, aggPaperClosedIssuesDF, 'Open', 'State', 'Closed', 'State',
-#                           [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023], 'Years', 'Number of Issues','Open & Closed Issues per Year' )
+for year in Years:
+    try:    
+        paperOpenIssuesYearlyTotal.append(aggPaperOpenIssuesDF.loc[aggPaperOpenIssuesDF['Created_At_Year'] == year]['State'].values[0])
+    except IndexError:
+        paperOpenIssuesYearlyTotal.append(0)
+    try:    
+        paperClosedIssuesYearlyTotal.append(aggPaperClosedIssuesDF.loc[aggPaperClosedIssuesDF['Created_At_Year'] == year]['State'].values[0])
+    except IndexError:
+        paperClosedIssuesYearlyTotal.append(0) 
+    try:    
+        bakkesOpenIssuesYearlyTotal.append(aggBakkesOpenIssuesDF.loc[aggBakkesOpenIssuesDF['Created_At_Year'] == year]['State'].values[0])
+    except IndexError:
+        bakkesOpenIssuesYearlyTotal.append(0) 
+    try:    
+        bakkesClosedIssuesYearlyTotal.append(aggBakkesClosedIssuesDF.loc[aggBakkesClosedIssuesDF['Created_At_Year'] == year]['State'].values[0])
+    except IndexError:
+        bakkesClosedIssuesYearlyTotal.append(0)         
+
+
+vis.createDoubleBarChart('Open', paperOpenIssuesYearlyTotal, 'Closed', paperClosedIssuesYearlyTotal,
+                          [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023], 'Years', 'Number of Issues','Open & Closed Issues per Year' )
+
+vis.createDoubleBarChart('Open', bakkesOpenIssuesYearlyTotal, 'Closed', bakkesClosedIssuesYearlyTotal,
+                          [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023], 'Years', 'Number of Issues','Open & Closed Issues per Year' )

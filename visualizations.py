@@ -38,20 +38,11 @@ def createBarChart(df, xAxis, yAxis, df2, xAxisTitle = "x Axis" , yAxisTitle = "
     plt.title(chartTitle)
     plt.show() 
 
-def createDoubleBarChart(df, df2, xAxis1Name, xAxis1, xAxis2Name, xAxis2, DFindex, xAxisTitle = "x Axis" , yAxisTitle = "y Axis", chartTitle = "Chart Title"):
-    barChartDF = pd.DataFrame({xAxis1Name: df[xAxis1], xAxis2Name: df2[xAxis2]}, index=DFindex)
+def createDoubleBarChart(xAxis1Name, xAxis1, xAxis2Name, xAxis2, DFindex, xAxisTitle = "x Axis" , yAxisTitle = "y Axis", chartTitle = "Chart Title"):
+    barChartDF = pd.DataFrame({xAxis1Name: xAxis1, xAxis2Name: xAxis2}, index=DFindex)
     barChartDF.plot.bar(rot=0)
     plt.ylabel(yAxisTitle)
     plt.xlabel(xAxisTitle)
     plt.title(chartTitle)
     plt.show() 
-
-# #Comparing two repos       
-# def createDoubleBarChart(df, xAxis, yAxis, df2, xAxisTitle = "x Axis" , yAxisTitle = "y Axis", chartTitle = "Chart Title"):
-#     df.plot.bar(x=xAxis, y=yAxis)
-#     df2.plot.bar(x=xAxis, y=yAxis)
-#     plt.ylabel(yAxisTitle)
-#     plt.xlabel(xAxisTitle)
-#     plt.title(chartTitle)
-#     plt.show()     
 
