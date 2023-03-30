@@ -28,6 +28,8 @@ Years = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]
 
 paperOpenIssuesYearlyTotal, paperClosedIssuesYearlyTotal, bakkesOpenIssuesYearlyTotal, bakkesClosedIssuesYearlyTotal = ([] for i in range(4))
 
+#Create Number of open and closed issues by any time unit (day, week, month, year) over any period (YTD, year, lifetime of project) bar chart
+
 for year in Years:
     try:    
         paperOpenIssuesYearlyTotal.append(aggPaperOpenIssuesDF.loc[aggPaperOpenIssuesDF['Created_At_Year'] == year]['State'].values[0])
@@ -48,7 +50,26 @@ for year in Years:
 
 
 vis.createDoubleBarChart('Open', paperOpenIssuesYearlyTotal, 'Closed', paperClosedIssuesYearlyTotal,
-                          [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023], 'Years', 'Number of Issues','Open & Closed Issues per Year' )
+                          [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023], 'Years', 'Number of Issues',
+                          'Open & Closed Issues per Year',True, 'openClosedPerYearPaper', 'issuesVis')
 
 vis.createDoubleBarChart('Open', bakkesOpenIssuesYearlyTotal, 'Closed', bakkesClosedIssuesYearlyTotal,
-                          [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023], 'Years', 'Number of Issues','Open & Closed Issues per Year' )
+                          [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023], 'Years', 'Number of Issues',
+                          'Open & Closed Issues per Year',True, 'openClosedPerYearBakkes', 'issuesVis')
+
+
+
+PaperClosedIssuesDF = utl.addDaysToClose(PaperClosedIssuesDF, 'Created_At', 'Closed_At')
+BakkesClosedIssuesDF = utl.addDaysToClose(BakkesClosedIssuesDF, 'Created_At', 'Closed_At')
+
+#Create Do issues with more assignees stay open longer? scatterplot
+vis.createScatterPlot(PaperClosedIssuesDF, 'Assignees', 'Days_to_Close', 'Blue', 'Assignees', 'Days to Close', 'Days to Close vs Assignees',
+                      True, 'DaystoClosevsAssigneesPaper', 'issuesVis')
+vis.createScatterPlot(BakkesClosedIssuesDF, 'Assignees', 'Days_to_Close', 'Blue', 'Assignees', 'Days to Close', 'Days to Close vs Assignees',
+                      True, 'DaystoClosevsAssigneesBakkes', 'issuesVis')
+
+#Do issues with more comments stay open longer?
+vis.createScatterPlot(PaperClosedIssuesDF, 'Comments', 'Days_to_Close', 'Blue', 'Comments', 'Days to Close', 'Days to Close vs Comments',
+                      True, 'DaystoClosevsCommentsPaper', 'issuesVis')
+vis.createScatterPlot(BakkesClosedIssuesDF, 'Comments', 'Days_to_Close', 'Blue', 'Comments', 'Days to Close', 'Days to Close vs Comments',
+                      True, 'DaystoClosevsCommentsBakkes', 'issuesVis')
