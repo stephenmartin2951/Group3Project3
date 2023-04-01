@@ -23,5 +23,5 @@ def frequencyPerDate(df, dateField, metric):
     frequencyPerPeriod = commitTime[dateField].value_counts()
     valCounts = pd.DataFrame(frequencyPerPeriod).sort_index().reset_index()
     valCounts.columns = [dateField, metric]
-    # Returns the data frame with only year and number of commits for that time period
+    # Returns the data frame with only year and number of metrics for that time period
     return valCounts
