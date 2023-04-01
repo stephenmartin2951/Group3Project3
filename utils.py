@@ -9,6 +9,10 @@ def addYear(df, dateFieldBeingConverted, newFieldName):
     df[newFieldName] = pd.to_datetime(df[dateFieldBeingConverted]).dt.year
     return df
 
+def addDate(df, dateFieldBeingConverted, newFieldName):
+    df[newFieldName] = pd.to_datetime(df[dateFieldBeingConverted]).dt.date
+    return df
+
 def addDaysToClose(df, createdDate, closedDate):
     df["Days_to_Close"] = (pd.to_datetime(df[closedDate]) - pd.to_datetime(df[createdDate])) / np.timedelta64(1, 'D')
     return df

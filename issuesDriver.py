@@ -62,10 +62,13 @@ vis.createDoubleBarChart('Open', bakkesOpenIssuesYearlyTotal, 'Closed', bakkesCl
 PaperClosedIssuesDF = utl.addDaysToClose(PaperClosedIssuesDF, 'Created_At', 'Closed_At')
 BakkesClosedIssuesDF = utl.addDaysToClose(BakkesClosedIssuesDF, 'Created_At', 'Closed_At')
 
-#Create Do issues with more assignees stay open longer? scatterplot
-vis.createScatterPlot(PaperClosedIssuesDF, 'Assignees', 'Days_to_Close', 'Blue', 'Assignees', 'Days to Close', 'Days to Close vs Assignees',
+AvgPaperClosedIssuesDF = PaperClosedIssuesDF.groupby(["Assignees"], as_index=False).mean()
+AvgBakkesClosedIssuesDF = BakkesClosedIssuesDF.groupby(["Assignees"], as_index=False).mean()
+
+#Create Do issues with more assignees stay open longer? 
+vis.createBarChart(AvgPaperClosedIssuesDF, 'Assignees', 'Days_to_Close', 'Assignees', 'Days to Close', 'Avg Days to Close',
                       True, 'DaystoClosevsAssigneesPaper', 'issuesVis')
-vis.createScatterPlot(BakkesClosedIssuesDF, 'Assignees', 'Days_to_Close', 'Blue', 'Assignees', 'Days to Close', 'Days to Close vs Assignees',
+vis.createBarChart(AvgBakkesClosedIssuesDF, 'Assignees', 'Days_to_Close', 'Assignees', 'Days to Close', 'Avg Days to Close',
                       True, 'DaystoClosevsAssigneesBakkes', 'issuesVis')
 
 #Do issues with more comments stay open longer?
@@ -73,3 +76,5 @@ vis.createScatterPlot(PaperClosedIssuesDF, 'Comments', 'Days_to_Close', 'Blue', 
                       True, 'DaystoClosevsCommentsPaper', 'issuesVis')
 vis.createScatterPlot(BakkesClosedIssuesDF, 'Comments', 'Days_to_Close', 'Blue', 'Comments', 'Days to Close', 'Days to Close vs Comments',
                       True, 'DaystoClosevsCommentsBakkes', 'issuesVis')
+
+

@@ -37,3 +37,13 @@ def createDoubleBarChart(xAxis1Name, xAxis1, xAxis2Name, xAxis2, DFindex, xAxisT
     else:
         plt.show() 
 
+def createLineChart(df, xAxis, yAxis, xAxisTitle = "x Axis" , yAxisTitle = "y Axis", chartTitle = "Chart Title", save = False, fileName = "", savePath = ""):
+    df.plot.line(x=xAxis, y=yAxis)
+    plt.ylabel(yAxisTitle)
+    plt.xlabel(xAxisTitle)
+    plt.title(chartTitle)
+    if(save):
+        plt.savefig('{}/{}'.format(savePath, fileName))
+    else:
+        plt.show()          
+
