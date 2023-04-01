@@ -30,10 +30,35 @@ BakkesSizeDF = BakkesSizeDF.groupby(["Year"], as_index=False).mean()
 
 Years = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]
 
-paperIssuesDensity = pd.DataFrame()
-bakkesIssuesDensity = pd.DataFrame()
 
 #For year in years, add issues and size
+paperList, bakkesList = ([] for i in range(2))
+for year in Years:
+    try:    
+        issuesPaperVal = PaperIssuesDF.loc[PaperIssuesDF['Year'] == year]['Issues'].values[0]
+    except IndexError:
+        issuesPaperVal = 0
+    try:    
+        sizePaperVal = PaperSizeDF.loc[PaperSizeDF['Year'] == year]['Size'].values[0]
+    except IndexError:
+        sizePaperVal = 0    
+    try:    
+        issuesBakkesVal = BakkesIssuesDF.loc[BakkesIssuesDF['Year'] == year]['Issues'].values[0]
+    except IndexError:
+        issuesBakkesVal = 0
+    try:    
+        sizeBakkesVal = BakkesSizeDF.loc[BakkesSizeDF['Year'] == year]['Size'].values[0]
+    except IndexError:
+        sizeBakkesVal = 0   
+    paperList.append({'Year':year, 'Issues':issuesPaperVal, 'Size': sizePaperVal})
+    bakkesList.append({'Year':year, 'Issues':issuesBakkesVal, 'Size': sizeBakkesVal})    
 
+paperIssuesDensity = pd.DataFrame(paperList)
+bakkesIssuesDensity = pd.DataFrame(bakkesList)
 
-print(paperIssuesDensity)
+paperIssuesDensity['IssuesDensity'] = paperIssuesDensity['Issues'] / paperIssuesDensity['Size']
+bakkesIssuesDensity['IssuesDensity'] = bakkesIssuesDensity['Issues'] / bakkesIssuesDensity['Size']
+
+vis.createLineChart(paperIssuesDensity, "Year", "IssuesDensity", "Date", "Issues / Size", "Historical Trend of Issue Density",True, 'repoDensityTrendPaper', 'densityVis')
+vis.createLineChart(bakkesIssuesDensity, "Year", "IssuesDensity", "Date", "Issues / Size", "Historical Trend of Issue Density",True, 'repoDensityTrendBakkes', 'densityVis')
+
